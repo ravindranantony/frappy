@@ -6,13 +6,19 @@ let birdImg;
 let obstacleTopImg;
 let obstacleBottomImg;
 let baseImg;
+let startSound, passSound, gameOverSound;
 let buttonX, buttonY, buttonWidth, buttonHeight;
 
 function preload() {
   birdImg = loadImage('sprites/bluebird-downflap.png');
   obstacleTopImg = loadImage('sprites/pipe-green.png');
   obstacleBottomImg = loadImage('sprites/pipe-red.png');
-  baseImg = loadImage('sprites/base.png');  // Load the base image  
+  baseImg = loadImage('sprites/base.png');  // Load the base image
+  
+  // Load sounds
+  startSound = loadSound('audio/swoosh.wav');
+  passSound = loadSound('audio/point.wav');
+  gameOverSound = loadSound('sounds/die.wav');
 }
 
 function setup() {
@@ -43,6 +49,7 @@ function draw() {
       if (obstacles[i].hits(bird)) {
         console.log("HIT");
         gameOver = true;
+        gameOverSound.play();  // Play game over sound
       }
 
       if (obstacles[i].offscreen()) {
@@ -85,6 +92,9 @@ function mousePressed() {
     obstacles = [];
     score = 0;
     gameOver = false;
+
+    // Play start sound
+    startSound.play();
   }
 }
 
@@ -148,6 +158,7 @@ function Obstacle() {
   this.offscreen = function() {
     if (this.x < -this.w) {
       score++;
+      passSound.play();  // Play pass sound
       return true;
     } else {
       return false;
