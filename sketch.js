@@ -1,26 +1,32 @@
 let bird;
 let obstacles = [];
 let score = 0;
+let gameOver = false;
 let birdImg;
 let obstacleTopImg;
 let obstacleBottomImg;
 let floorHeight = 50;  // Height of the floor
+let buttonX, buttonY, buttonWidth, buttonHeight;
 
 function preload() {
-  birdImg = loadImage('path_to_your_bird_image.png');
-  obstacleTopImg = loadImage('path_to_your_obstacle_top_image.png');
-  obstacleBottomImg = loadImage('path_to_your_obstacle_bottom_image.png');
+  birdImg = loadImage('frappy/sprites/bluebird-downflap.png');
+  obstacleTopImg = loadImage('frappy/sprites/pipe-green.png');
+  obstacleBottomImg = loadImage('frappy/sprites/pipe-red.png');
 }
 
 function setup() {
   createCanvas(400, 600);
   bird = new Bird();
   obstacles.push(new Obstacle());
+  buttonWidth = 200;
+  buttonHeight = 50;
+  buttonX = width / 2 - buttonWidth / 2;
+  buttonY = height / 2 - buttonHeight / 2;
 }
 
 function draw() {
   background(0);
-  
+
   // Draw the floor
   fill(255);
   rect(0, height - floorHeight, width, floorHeight);
@@ -28,22 +34,36 @@ function draw() {
   bird.update();
   bird.show();
 
-  if (frameCount % 100 == 0) {
-    obstacles.push(new Obstacle());
-  }
-
-  for (let i = obstacles.length - 1; i >= 0; i--) {
-    obstacles[i].show();
-    obstacles[i].update();
-
-    if (obstacles[i].hits(bird)) {
-      console.log("HIT");
-      noLoop();
+  if (!gameOver) {
+    if (frameCount % 100 == 0) {
+      obstacles.push(new Obstacle());
     }
 
-    if (obstacles[i].offscreen()) {
-      obstacles.splice(i, 1);
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+      obstacles[i].show();
+      obstacles[i].update();
+
+      if (obstacles[i].hits(bird)) {
+        console.log("HIT");
+        gameOver = true;
+      }
+
+      if (obstacles[i].offscreen()) {
+        obstacles.splice(i, 1);
+      }
     }
+  } else {
+    fill(255);
+    textSize(50);
+    textAlign(CENTER, CENTER);
+    text("Game Over", width / 2, height / 4);
+
+    // Draw the restart button
+    fill(200);
+    rect(buttonX, buttonY, buttonWidth, buttonHeight);
+    fill(0);
+    textSize(20);
+    text("Restart Game", width / 2, height / 2);
   }
 
   fill(255);
@@ -54,6 +74,17 @@ function draw() {
 function keyPressed() {
   if (key == ' ') {
     bird.up();
+  }
+}
+
+function mousePressed() {
+  // Check if the mouse click is within the bounds of the button
+  if (gameOver && mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight) {
+    // Restart the game
+    bird = new Bird();
+    obstacles = [];
+    score = 0;
+    gameOver = false;
   }
 }
 
@@ -76,7 +107,7 @@ function Bird() {
     this.velocity += this.gravity;
     this.y += this.velocity;
 
-    if (this.y > height - floorHeight) {  // Adjusted for the floor
+    if (this.y > height - floorHeight) {
       this.y = height - floorHeight;
       this.velocity = 0;
     }
@@ -90,7 +121,7 @@ function Bird() {
 
 function Obstacle() {
   this.top = random(height / 2);
-  this.bottom = random(height / 2 - floorHeight);  // Adjusted for the floor
+  this.bottom = random(height / 2 - floorHeight);
   this.x = width;
   this.w = 20;
   this.speed = 2;
