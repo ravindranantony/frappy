@@ -85,7 +85,8 @@ function draw() {
     text("@senthazalravi", width / 2, 75); // Place the text below the score
     text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
 
-    image(baseImg, 0, height - baseImg.height);  // Draw the base image at the bottom of the screen
+    image(baseImg, 0, height - baseImg.height * 0.75, width, baseImg.height * 0.75);
+  // Draw the base image at the bottom of the screen
 
 }
 
