@@ -22,7 +22,7 @@ function preload() {
     gameOverSound = loadSound('audio/die.wav');
 
     // Load background image
-    backgroundImage = loadImage('images/background.png');
+    backgroundImage = loadImage('images/background.jpg');
 }
 
 function setup() {
