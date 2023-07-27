@@ -11,18 +11,18 @@ let backgroundImage;
 let buttonX, buttonY, buttonWidth, buttonHeight;
 
 function preload() {
-    birdImg = loadImage('sprites/bluebird-downflap.png');
-    obstacleTopImg = loadImage('sprites/pipe-green.png');
-    obstacleBottomImg = loadImage('sprites/pipe-red.png');
-    baseImg = loadImage('sprites/base.png');  // Load the base image
+  birdImg = loadImage('sprites/bluebird-downflap.png');
+  obstacleTopImg = loadImage('sprites/pipe-green.png');
+  obstacleBottomImg = loadImage('sprites/pipe-red.png');
+  baseImg = loadImage('sprites/base.png');  // Load the base image
 
-    // Load sounds
-    startSound = loadSound('audio/swoosh.wav');
-    passSound = loadSound('audio/point.wav');
-    gameOverSound = loadSound('audio/die.wav');
+  // Load sounds
+  startSound = loadSound('audio/swoosh.wav');
+  passSound = loadSound('audio/point.wav');
+  gameOverSound = loadSound('audio/die.wav');
 
-    // Load background image
-    backgroundImage = loadImage('images/background.jpg');
+  // Load background image
+  backgroundImage = loadImage('images/background.jpg');
 }
 
 function setup() {
@@ -73,15 +73,20 @@ function draw() {
         rect(buttonX, buttonY, buttonWidth, buttonHeight);
         fill(0);
         textSize(20);
-        text("Restart Game", width / 2, height / 2);
+        text("Restart Game", width / 2, height / 2)
+ 
     }
-
     fill(255);
     textSize(32);
     textAlign(CENTER, CENTER);  // Center align text
     text("Score: " + score, width / 2, 50);  // Position at center of screen
 
+    textSize(20); // Make the following texts smaller
+    text("@senthazalravi", width / 2, 75); // Place the text below the score
+    text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
+
     image(baseImg, 0, height - baseImg.height);  // Draw the base image at the bottom of the screen
+
 }
 
 function keyPressed() {
