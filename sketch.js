@@ -9,9 +9,9 @@ let floorHeight = 50;  // Height of the floor
 let buttonX, buttonY, buttonWidth, buttonHeight;
 
 function preload() {
-  birdImg = loadImage('frappy/sprites/bluebird-downflap.png');
-  obstacleTopImg = loadImage('frappy/sprites/pipe-green.png');
-  obstacleBottomImg = loadImage('frappy/sprites/pipe-red.png');
+  birdImg = loadImage('sprites/bluebird-downflap.png');
+  obstacleTopImg = loadImage('sprites/pipe-green.png');
+  obstacleBottomImg = loadImage('sprites/pipe-red.png');
 }
 
 function setup() {
