@@ -1,6 +1,16 @@
 let bird;
 let obstacles = [];
 let score = 0;
+let birdImg;
+let obstacleTopImg;
+let obstacleBottomImg;
+let floorHeight = 50;  // Height of the floor
+
+function preload() {
+  birdImg = loadImage('path_to_your_bird_image.png');
+  obstacleTopImg = loadImage('path_to_your_obstacle_top_image.png');
+  obstacleBottomImg = loadImage('path_to_your_obstacle_bottom_image.png');
+}
 
 function setup() {
   createCanvas(400, 600);
@@ -10,6 +20,11 @@ function setup() {
 
 function draw() {
   background(0);
+  
+  // Draw the floor
+  fill(255);
+  rect(0, height - floorHeight, width, floorHeight);
+  
   bird.update();
   bird.show();
 
@@ -50,8 +65,7 @@ function Bird() {
   this.velocity = 0;
 
   this.show = function() {
-    fill(255);
-    ellipse(this.x, this.y, 32, 32);
+    image(birdImg, this.x, this.y, 32, 32);
   }
 
   this.up = function() {
@@ -62,8 +76,8 @@ function Bird() {
     this.velocity += this.gravity;
     this.y += this.velocity;
 
-    if (this.y > height) {
-      this.y = height;
+    if (this.y > height - floorHeight) {  // Adjusted for the floor
+      this.y = height - floorHeight;
       this.velocity = 0;
     }
 
@@ -76,7 +90,7 @@ function Bird() {
 
 function Obstacle() {
   this.top = random(height / 2);
-  this.bottom = random(height / 2);
+  this.bottom = random(height / 2 - floorHeight);  // Adjusted for the floor
   this.x = width;
   this.w = 20;
   this.speed = 2;
@@ -91,9 +105,8 @@ function Obstacle() {
   }
 
   this.show = function() {
-    fill(255);
-    rect(this.x, 0, this.w, this.top);
-    rect(this.x, height - this.bottom, this.w, this.bottom);
+    image(obstacleTopImg, this.x, 0, this.w, this.top);
+    image(obstacleBottomImg, this.x, height - this.bottom, this.w, this.bottom);
   }
 
   this.update = function() {
