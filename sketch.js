@@ -64,16 +64,16 @@ function draw() {
         }
     } else {
         fill(255);
-        textSize(50);
+        textSize(20);
         textAlign(CENTER, CENTER);
-        text("Game Over", width / 2, height / 4);
+        text("கண்ணா,நீ அவுட்டு கண்ணா..", width / 2, height / 4);
 
         // Draw the restart button
         fill(200);
         rect(buttonX, buttonY, buttonWidth, buttonHeight);
         fill(0);
-        textSize(20);
-        text("Restart Game", width / 2, height / 2)
+        textSize(12);
+        text("மறுபடி விளையாடு கண்ணா.", width / 2, height / 2)
  
     }
     fill(255);
