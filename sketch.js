@@ -11,27 +11,27 @@ let backgroundImage;
 let buttonX, buttonY, buttonWidth, buttonHeight;
 
 function preload() {
-  birdImg = loadImage('sprites/bluebird-downflap.png');
-  obstacleTopImg = loadImage('sprites/pipe-green.png');
-  obstacleBottomImg = loadImage('sprites/pipe-red.png');
-  baseImg = loadImage('sprites/base.png');  // Load the base image
+    birdImg = loadImage('sprites/bluebird-downflap.png');
+    obstacleTopImg = loadImage('sprites/pipe-green.png');
+    obstacleBottomImg = loadImage('sprites/pipe-red.png');
+    baseImg = loadImage('sprites/base.png');
 
-  // Load sounds
-  startSound = loadSound('audio/swoosh.wav');
-  passSound = loadSound('audio/point.wav');
-  gameOverSound = loadSound('audio/die.wav');
+    // Load sounds
+    startSound = loadSound('audio/swoosh.wav');
+    passSound = loadSound('audio/point.wav');
+    gameOverSound = loadSound('audio/die.wav');
 
-  // Load background image
-  backgroundImage = loadImage('images/background.jpg');
+    // Load background image
+    backgroundImage = loadImage('images/background.jpg');
 }
 
 function setup() {
-    let cnv = createCanvas(400, 600);
-    cnv.id('gameCanvas');  // Assign an id to the canvas
+    let cnv = createCanvas(windowWidth, windowHeight);
+    cnv.id('gameCanvas');
     bird = new Bird();
     obstacles.push(new Obstacle());
-    buttonWidth = 200;
-    buttonHeight = 50;
+    buttonWidth = width / 2;
+    buttonHeight = height / 10;
     buttonX = width / 2 - buttonWidth / 2;
     buttonY = height / 2 - buttonHeight / 2;
 }
@@ -74,7 +74,6 @@ function draw() {
         fill(0);
         textSize(12);
         text("மறுபடி விளையாடு கண்ணா.", width / 2, height / 2)
- 
     }
     fill(255);
     textSize(32);
@@ -91,12 +90,14 @@ function draw() {
 }
 
 function keyPressed() {
-    if (key == ' ') {
+    if (key == ' ' || touches.length > 0) {
         bird.up();
+        touches = [];
     }
 }
 
 function mousePressed() {
+    bird.up();
     // Check if the mouse click is within the bounds of the button
     if (gameOver && mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight) {
         // Restart the game
@@ -110,15 +111,20 @@ function mousePressed() {
     }
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+
 function Bird() {
     this.y = height / 2;
     this.x = 64;
+    this.size = height / 15;
     this.gravity = 0.6;
     this.lift = -15;
     this.velocity = 0;
 
     this.show = function() {
-        image(birdImg, this.x, this.y, 32, 32);
+        image(birdImg, this.x, this.y, this.size, this.size);
     }
 
     this.up = function() {
@@ -146,7 +152,7 @@ function Obstacle() {
     this.top = random(height / 2);
     this.bottom = random(height / 2);
     this.x = width;
-    this.w = 50;
+    this.w = width / 8; // Adjust obstacle width based on screen width
     this.speed = 2;
 
     this.hits = function(bird) {
