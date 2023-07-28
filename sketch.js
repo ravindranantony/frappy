@@ -11,29 +11,30 @@ let backgroundImage;
 let buttonX, buttonY, buttonWidth, buttonHeight;
 
 function preload() {
-    birdImg = loadImage('sprites/bluebird-downflap.png');
-    obstacleTopImg = loadImage('sprites/pipe-green.png');
-    obstacleBottomImg = loadImage('sprites/pipe-red.png');
-    baseImg = loadImage('sprites/base.png');
+  birdImg = loadImage('sprites/bluebird-downflap.png');
+  obstacleTopImg = loadImage('sprites/pipe-green.png');
+  obstacleBottomImg = loadImage('sprites/pipe-red.png');
+  baseImg = loadImage('sprites/base.png');  // Load the base image
 
-    // Load sounds
-    startSound = loadSound('audio/swoosh.wav');
-    passSound = loadSound('audio/point.wav');
-    gameOverSound = loadSound('audio/die.wav');
+  // Load sounds
+  startSound = loadSound('audio/3.wav');
+  passSound = loadSound('audio/point.wav');
+  gameOverSound = loadSound('audio/2.wav');
 
-    // Load background image
-    backgroundImage = loadImage('images/background.jpg');
+  // Load background image
+  backgroundImage = loadImage('images/bg1.jpg');
 }
 
 function setup() {
     let cnv = createCanvas(windowWidth, windowHeight);
-    cnv.id('gameCanvas');
+    cnv.id('gameCanvas');  // Assign an id to the canvas
     bird = new Bird();
     obstacles.push(new Obstacle());
-    buttonWidth = width / 2;
-    buttonHeight = height / 10;
+    buttonWidth = 200;
+    buttonHeight = 50;
     buttonX = width / 2 - buttonWidth / 2;
     buttonY = height / 2 - buttonHeight / 2;
+    cnv.touchStarted(handleTouch);
 }
 
 function draw() {
@@ -64,25 +65,25 @@ function draw() {
         }
     } else {
         fill(255);
-        textSize(20);
+        textSize(12);
         textAlign(CENTER, CENTER);
-        text("கண்ணா,நீ அவுட்டு கண்ணா..", width / 2, height / 4);
-
+        text("செய்றதையும் செஞ்சிட்டு முழிக்கிறதை பாரு.", width / 2, height / 4);
         // Draw the restart button
         fill(200);
         rect(buttonX, buttonY, buttonWidth, buttonHeight);
         fill(0);
-        textSize(12);
-        text("மறுபடி விளையாடு கண்ணா.", width / 2, height / 2)
+        textSize(8);
+        text("அரசியல்ல இதெல்லாம் சாதாரணமப்பா...", width / 2, height / 2)
+ 
     }
     fill(255);
     textSize(32);
     textAlign(CENTER, CENTER);  // Center align text
     text("Score: " + score, width / 2, 50);  // Position at center of screen
 
-    textSize(20); // Make the following texts smaller
-    text("@senthazalravi", width / 2, 75); // Place the text below the score
-    text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
+    textSize(18); // Make the following texts smaller
+    text("Sarmathi k", width / 2, 75); // Place the text below the score
+    text("#pepperprogramming", width / 2, 100); // Place the text below "Divya"
 
     image(baseImg, 0, height - baseImg.height * 0.75, width, baseImg.height * 0.75);
   // Draw the base image at the bottom of the screen
@@ -90,14 +91,25 @@ function draw() {
 }
 
 function keyPressed() {
-    if (key == ' ' || touches.length > 0) {
+    if (key == ' ') {
         bird.up();
-        touches = [];
     }
 }
 
+function handleTouch() {
+    // Handle touch event on mobile
+    if (!gameOver) {
+        bird.up();
+    } else {
+        // Check if the touch is within the bounds of the restart button
+        if (mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight) {
+            restartGame();
+        }
+    }
+}
+
+
 function mousePressed() {
-    bird.up();
     // Check if the mouse click is within the bounds of the button
     if (gameOver && mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight) {
         // Restart the game
@@ -111,20 +123,15 @@ function mousePressed() {
     }
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-}
-
 function Bird() {
     this.y = height / 2;
     this.x = 64;
-    this.size = height / 15;
     this.gravity = 0.6;
     this.lift = -15;
     this.velocity = 0;
 
     this.show = function() {
-        image(birdImg, this.x, this.y, this.size, this.size);
+        image(birdImg, this.x, this.y, 32, 32);
     }
 
     this.up = function() {
@@ -152,7 +159,7 @@ function Obstacle() {
     this.top = random(height / 2);
     this.bottom = random(height / 2);
     this.x = width;
-    this.w = width / 8; // Adjust obstacle width based on screen width
+    this.w = 50;
     this.speed = 2;
 
     this.hits = function(bird) {
