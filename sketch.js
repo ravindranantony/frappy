@@ -17,12 +17,12 @@ function preload() {
   baseImg = loadImage('sprites/base.png');  // Load the base image
 
   // Load sounds
-  startSound = loadSound('audio/swoosh.wav');
+  startSound = loadSound('audio/3.wav');
   passSound = loadSound('audio/point.wav');
-  gameOverSound = loadSound('audio/die.wav');
+  gameOverSound = loadSound('audio/2.wav');
 
   // Load background image
-  backgroundImage = loadImage('images/background.jpg');
+  backgroundImage = loadImage('images/bg1.jpg');
 }
 
 function setup() {
@@ -64,16 +64,16 @@ function draw() {
         }
     } else {
         fill(255);
-        textSize(20);
+        textSize(12);
         textAlign(CENTER, CENTER);
-        text("கண்ணா,நீ அவுட்டு கண்ணா..", width / 2, height / 4);
+        text("செய்றதையும் செஞ்சிட்டு முழிக்கிறதை பாரு..", width / 2, height / 4);
 
         // Draw the restart button
         fill(200);
         rect(buttonX, buttonY, buttonWidth, buttonHeight);
         fill(0);
-        textSize(12);
-        text("மறுபடி விளையாடு கண்ணா.", width / 2, height / 2)
+        textSize(8);
+        text("அரசியல்ல இதெல்லாம் சாதாரணமப்பா...", width / 2, height / 2)
  
     }
     fill(255);
@@ -82,7 +82,7 @@ function draw() {
     text("Score: " + score, width / 2, 50);  // Position at center of screen
 
     textSize(20); // Make the following texts smaller
-    text("@senthazalravi", width / 2, 75); // Place the text below the score
+    text("Sarmathi k", width / 2, 75); // Place the text below the score
     text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
 
     image(baseImg, 0, height - baseImg.height * 0.75, width, baseImg.height * 0.75);
