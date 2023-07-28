@@ -26,7 +26,7 @@ function preload() {
 }
 
 function setup() {
-    let cnv = createCanvas(400, 600);
+    let cnv = createCanvas(windowWidth, windowHeight);
     cnv.id('gameCanvas');  // Assign an id to the canvas
     bird = new Bird();
     obstacles.push(new Obstacle());
@@ -34,6 +34,7 @@ function setup() {
     buttonHeight = 50;
     buttonX = width / 2 - buttonWidth / 2;
     buttonY = height / 2 - buttonHeight / 2;
+    cnv.touchStarted(handleTouch);
 }
 
 function draw() {
@@ -66,8 +67,7 @@ function draw() {
         fill(255);
         textSize(12);
         textAlign(CENTER, CENTER);
-        text("செய்றதையும் செஞ்சிட்டு முழிக்கிறதை பாரு..", width / 2, height / 4);
-
+        text("செய்றதையும் செஞ்சிட்டு முழிக்கிறதை பாரு.", width / 2, height / 4);
         // Draw the restart button
         fill(200);
         rect(buttonX, buttonY, buttonWidth, buttonHeight);
@@ -81,9 +81,9 @@ function draw() {
     textAlign(CENTER, CENTER);  // Center align text
     text("Score: " + score, width / 2, 50);  // Position at center of screen
 
-    textSize(20); // Make the following texts smaller
-    text("Sarmathi k", width / 2, 75); // Place the text below the score
-    text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
+    textSize(15); // Make the following texts smaller
+    text("Divya", width / 2, 75); // Place the text below the score
+    text("#pepperprogramming", width / 2, 100); // Place the text below "Divya"
 
     image(baseImg, 0, height - baseImg.height * 0.75, width, baseImg.height * 0.75);
   // Draw the base image at the bottom of the screen
@@ -95,6 +95,19 @@ function keyPressed() {
         bird.up();
     }
 }
+
+function handleTouch() {
+    // Handle touch event on mobile
+    if (!gameOver) {
+        bird.up();
+    } else {
+        // Check if the touch is within the bounds of the restart button
+        if (mouseX > buttonX && mouseX < buttonX + buttonWidth && mouseY > buttonY && mouseY < buttonY + buttonHeight) {
+            restartGame();
+        }
+    }
+}
+
 
 function mousePressed() {
     // Check if the mouse click is within the bounds of the button
