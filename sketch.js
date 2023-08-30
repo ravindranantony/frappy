@@ -22,7 +22,7 @@ function preload() {
     gameOverSound = loadSound('audio/die.wav');
 
     // Load background image
-    backgroundImage = loadImage('images/background.jpg');
+    backgroundImage = loadImage('images/shinchan.jpg');
 }
 
 function setup() {
@@ -66,7 +66,7 @@ function draw() {
         fill(255);
         textSize(20);
         textAlign(CENTER, CENTER);
-        text("கண்ணா,நீ அவுட்டு கண்ணா..", width / 2, height / 4);
+        text("அமைதி அமைதி அமைதியோ அமைதி..கண்ணா,நீ அவுட்டு கண்ணா..", width / 2, height / 4);
 
         // Draw the restart button
         fill(200);
@@ -80,9 +80,9 @@ function draw() {
     textAlign(CENTER, CENTER);  // Center align text
     text("Score: " + score, width / 2, 50);  // Position at center of screen
 
-    textSize(20); // Make the following texts smaller
-    text("@senthazalravi", width / 2, 75); // Place the text below the score
-    text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
+    //textSize(20); // Make the following texts smaller
+    //text("@senthazalravi", width / 2, 75); // Place the text below the score
+    //text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
 
     image(baseImg, 0, height - baseImg.height * 0.75, width, baseImg.height * 0.75);
   // Draw the base image at the bottom of the screen
