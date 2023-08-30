@@ -80,9 +80,9 @@ function draw() {
     textAlign(CENTER, CENTER);  // Center align text
     text("Score: " + score, width / 2, 50);  // Position at center of screen
 
-    //textSize(20); // Make the following texts smaller
-    //text("@senthazalravi", width / 2, 75); // Place the text below the score
-    //text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
+    textSize(20); // Make the following texts smaller
+    text("Lakshmi", width / 2, 75); // Place the text below the score
+    text("#pepperprogramming", width / 2, 100); // Place the text below "@senthazalravi"
 
     image(baseImg, 0, height - baseImg.height * 0.75, width, baseImg.height * 0.75);
   // Draw the base image at the bottom of the screen
